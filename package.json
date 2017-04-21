@@ -1,0 +1,25 @@
+
+{
+  "name": "mydevoxx-uuid-service",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "connect-multiparty": "2.0.x",
+    "debug": "~2.6.3",
+    "errorhandler": "1.4.x",
+    "express": "~4.15.2",
+    "method-override": "2.3.x",
+    "morgan": "~1.8.1",
+    "promise": "^7.1.1",
+    "sync-request": "^3.0.1",
+    "then-request": "^2.2.0"
+  },
+  "repository": {},
+  "engines": {
+    "node": "4.x"
+  }
+}
