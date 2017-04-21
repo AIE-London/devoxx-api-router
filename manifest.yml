@@ -4,6 +4,6 @@ applications:
   memory: 128M
   instances: 1
   domain: eu-gb.mybluemix.net
-  name:
-  host:
+  name: mydevoxx-capgemini-api-router
+  host: mydevoxx-capgemini-api-router
   disk_quota: 256M
