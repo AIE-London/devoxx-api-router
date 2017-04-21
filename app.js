@@ -1,4 +1,3 @@
-
 let express = require('express'), http = require('http'), path = require('path'), fs = require('fs');
 
 let app = express();
@@ -46,7 +45,7 @@ if ('development' === app.get('env')) {
  * GET devoxx API to receive UUID for email sent ->
  * Forwards received UUID to devoxx dashboard to get user specific data
  */
-app.get('/uuid?email=', (request, response) => {
+app.get('/', (request, response) => {
     let userEmail = request.query.email;
     let url = devoxxEndpoint + userEmail;
 
