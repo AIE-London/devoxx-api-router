@@ -19,6 +19,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(errorHandler);
 //app.use(basicAuth(username, password));
 
 if ('development' === app.get('env')) {
@@ -40,6 +41,7 @@ if ('development' === app.get('env')) {
     });
 }
 
+
 /**
  * GET - uuid for user
  *
@@ -48,14 +50,17 @@ if ('development' === app.get('env')) {
  * Forwards received UUID to devoxx dashboard to get user specific data
  */
 app.get('/uuid', (request, response) => {
+    console.log("HIT ME INSIDE THE METHOD");
+    response.write("hi");
+    return;
     let userEmail = request.query.email;
     let username = process.env.username;
     let password = process.env.password;
     let auth = 'Basic' + new Buffer(username + ':' + password).toString('base64');
 
-    let mockURL = devoxxEndpoint + '/uuid' + '?email=' + userEmail;
+    let url = devoxxEndpoint +'?email=' + userEmail;
 
-    req('GET', mockURL).then((res) => {
+    req('GET', url).then((res) => {
         response.setHeader('Content-Type','text/plain'/*, 'Authorization:' + auth*/);
         response.status = res.statusCode;
         response.write(res.body);
@@ -66,4 +71,9 @@ app.get('/uuid', (request, response) => {
         response.write("UUID not returned for email address given");
         response.end();
     })
+});
+
+app.use(bodyParser.json());
+http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
+    console.log('Express server listening on port ' + app.get('port'));
 });
