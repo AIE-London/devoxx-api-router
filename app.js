@@ -94,12 +94,12 @@ app.get('/scheduled', (request, response) => {
     let url = devoxxPrivateEndpointpoint + '/' + uuid + '/scheduled';
 
     req('GET', url, {headers: authHeader}).then((res) => {
-        response.setHeader('Content-Type', 'text/plain');
+        response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
         response.end();
     }, (err) => {
-        response.setHeader('Content-Type', 'text/plain');
+        response.setHeader('Content-Type', 'application/json');
         response.status = 404;
         response.write("Scheduled talks not returned for email address given");
         response.end();
@@ -116,12 +116,12 @@ app.get('/favored', (request, response) => {
     let url = devoxxPrivateEndpointpoint + '/' + uuid + '/favored';
 
     req('GET', url, {headers: authHeader}).then((res) => {
-        response.setHeader('Content-Type', 'text/plain');
+        response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
         response.end();
     }, (err) => {
-        response.setHeader('Content-Type', 'text/plain');
+        response.setHeader('Content-Type', 'application/json');
         response.status = 404;
         response.write("Favored Talks not returned for email address given");
         response.end();
