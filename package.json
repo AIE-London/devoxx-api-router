@@ -6,10 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "basic-auth-connect": "1.0.0",
+    "basic-authorization-header": "^0.2.7",
     "body-parser": "~1.17.1",
     "connect-multiparty": "2.0.x",
     "debug": "~2.6.3",
+    "ejs": "^2.5.6",
     "errorhandler": "1.4.x",
     "express": "~4.15.2",
     "method-override": "2.3.x",
