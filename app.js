@@ -3,7 +3,6 @@ let express = require('express'), http = require('http'), path = require('path')
 
 let app = express();
 
-//let Promise = require('promise');
 let logger = require('morgan');
 let errorHandler = require('errorhandler');
 let bodyParser = require('body-parser');
