@@ -13,6 +13,11 @@ let devoxxUuidEndpoint;
 let devoxxPrivateEndpointpoint;
 let authHeader;
 
+const winston = require('winston');
+winston.level = 'debug';
+
+winston.log('info', 'Launching app');
+
 /**
  * Setup for all environment variables
  */
@@ -23,6 +28,7 @@ app.use(bodyParser.json());
 
 //Sets Env Variables based on environment
 if ('development' === app.get('env')) {
+    winston.log('info', 'Launching in development mode');
     app.use(errorHandler());
 
     //Set up Wiremock Basic Auth
@@ -36,11 +42,12 @@ if ('development' === app.get('env')) {
     //Wiremock URL for Schedulued and Favored Talks
     devoxxPrivateEndpointpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 } else {
-
+    winston.log('info', 'Launching in production mode');
     //Set up BasicAuth Header
     authHeader = {
         'Authorization': basic(process.env.username, process.env.password)
     };
+    winston.log('debug', '[EMAIL] ' + process.env.username);
     //Devoxx API URLS to retrieve a users UUID
     devoxxUuidEndpoint = 'http://cfp.devoxx.co.uk/uuid';
 
@@ -49,11 +56,12 @@ if ('development' === app.get('env')) {
 }
 
 app.use((req, res, next) => {
+    // [TODO] Refactor to only allow production origin in production mode.
+    // Localhost is only fine in dev mode.
     let allowedOrigins = ['https://localhost:3000', 'http://localhost:3000', 'http://mydevoxx-uuid.eu-gb.mybluemix.net', 'https://mydevoxx-uuid.eu-gb.mybluemix.net'];
     let origin = req.headers.origin;
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
 
     if (allowedOrigins.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
@@ -70,15 +78,17 @@ app.use((req, res, next) => {
 app.get('/uuid', (request, response) => {
     let userEmail = request.query.email;
     let url = devoxxUuidEndpoint +'?email=' + userEmail;
-
+    winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
     req('GET', url, {headers: authHeader}).then((res) => {
+        winston.log('debug', '[HTTP] Response from devoxx with status: ' + res.statusCode);
         response.setHeader('Content-Type', 'text/plain');
         response.status = res.statusCode;
         response.write(res.body);
         response.end();
     }, (err) => {
+        winston.log('debug', '[HTTP] Response from devoxx with error: ' + err.toString());
         response.setHeader('Content-Type', 'text/plain');
-        response.status = res.statusCode;
+        response.status = 404;
         response.write("UUID not returned for email address given");
         response.end();
     })
@@ -91,13 +101,16 @@ app.get('/uuid', (request, response) => {
 app.get('/scheduled', (request, response) => {
     let uuid = request.query.uuid;
     let url = devoxxPrivateEndpointpoint + '/' + uuid + '/scheduled';
+    winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
+        winston.log('debug', '[HTTP] Response from devoxx with status: ' + res.statusCode);
         response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
         response.end();
     }, (err) => {
+        winston.log('debug', '[HTTP] Response from devoxx with error: ' + err.toString());
         response.setHeader('Content-Type', 'application/json');
         response.status = 404;
         response.write("Scheduled talks not returned for email address given");
@@ -113,13 +126,16 @@ app.get('/scheduled', (request, response) => {
 app.get('/favored', (request, response) => {
     let uuid = request.query.uuid;
     let url = devoxxPrivateEndpointpoint + '/' + uuid + '/favored';
+    winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
+        winston.log('debug', '[HTTP] Response from devoxx with status: ' + res.statusCode);
         response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
         response.end();
     }, (err) => {
+        winston.log('debug', '[HTTP] Response from devoxx with error: ' + err.toString());
         response.setHeader('Content-Type', 'application/json');
         response.status = 404;
         response.write("Favored Talks not returned for email address given");
