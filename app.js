@@ -26,10 +26,15 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+let allowedOrigins = ['https://mydevoxx-dashboard.eu-gb.mybluemix.net'];
+
 //Sets Env Variables based on environment
 if ('development' === app.get('env')) {
     winston.log('info', 'Launching in development mode');
     app.use(errorHandler());
+
+    // Update allowed origins
+    allowedOrigins.concat(['https://localhost:3000', 'http://localhost:3000', ]);
 
     //Set up Wiremock Basic Auth
     authHeader = {
@@ -56,9 +61,7 @@ if ('development' === app.get('env')) {
 }
 
 app.use((req, res, next) => {
-    // [TODO] Refactor to only allow production origin in production mode.
     // Localhost is only fine in dev mode.
-    let allowedOrigins = ['https://localhost:3000', 'http://localhost:3000', 'http://mydevoxx-uuid.eu-gb.mybluemix.net', 'https://mydevoxx-uuid.eu-gb.mybluemix.net'];
     let origin = req.headers.origin;
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
