@@ -62,8 +62,8 @@ describe('getFavoredTalks', function(){
     })
 });
 
-describe('getSpeakerDetails', () => {
-    it('should return the speaker data for a talk', () => {
+describe('getSpeakerDetails', function() {
+    it('should return the speaker data for a talk', function() {
         request(api).get('/speakers?speakerId=695b40d928dd0a905b7ab1b900b5a5752870a7d8')
             .set('Accept', 'application/json')
             .expect(200)
@@ -104,8 +104,8 @@ describe('getSpeakerDetails', () => {
     });
 });
 
-describe('getTalkDetails', () => {
-    it('should return the talk data', () => {
+describe('getTalkDetails', function() {
+    it('should return the talk data', function() {
         request(api).get('/talks?talkId=IBN-5679')
             .set('Accept', 'application/json')
             .expect(200)
