@@ -102,3 +102,31 @@ describe('getSpeakerDetails', () => {
             })
     });
 });
+
+describe('getTalkDetails', () => {
+    it('should return the talk data', () => {
+        request(api).get('/talks?talkId=IBN-5679')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end((err,res) => {
+                expect(res.body).to.include({
+                    "id": "IBN-5679",
+                    "title": "The DevOps Superpattern",
+                    "talkType": "Conference",
+                    "track": "Agile, DevOps",
+                    "lang": "en",
+                    "summary": "Talk summary",
+                    "speakers": [
+                        {
+                            "link": {
+                                "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/695b40d928dd0a905b7ab1b900b5a5752870a7d8",
+                                "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
+                                "title": "Helen Beal"
+                            },
+                            "name": "Helen Beal"
+                        }
+                    ]
+                })
+            })
+    });
+});

@@ -48,7 +48,7 @@ if ('development' === app.get('env')) {
     //Wiremock URL for UUID
     devoxxUuidEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/uuid';
 
-    //Wiremock URL for Schedulued and Favored Talks
+    //Wiremock URL for Scheduled and Favored Talks
     devoxxPrivateEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 
     //using live endpoints
