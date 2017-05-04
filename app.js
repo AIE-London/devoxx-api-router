@@ -52,12 +52,10 @@ if ('development' === app.get('env')) {
     devoxxPrivateEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 
     //using live endpoints
-    devoxxSpeakersEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/";
-    devoxxRoomsEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/rooms/";
-    devoxxScheduleEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/";
-    devoxxTalkEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/";
-
-
+    devoxxSpeakersEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/speakers/";
+    devoxxRoomsEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/rooms/";
+    devoxxScheduleEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/schedules/";
+    devoxxTalkEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/talks/";
 } else {
     winston.log('info', 'Launching in production mode');
     //Set up BasicAuth Header
@@ -89,7 +87,6 @@ app.use((req, res, next) => {
     }
     return next();
 });
-
 
 /**
  * GET - uuid for user
