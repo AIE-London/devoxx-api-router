@@ -68,28 +68,29 @@ describe('getSpeakerDetails', () => {
             .set('Accept', 'application/json')
             .expect(200)
             .end((err,res) => {
-                expect(res.body).to.include({
+                expect(res.body).to.equal({
                     "uuid": "695b40d928dd0a905b7ab1b900b5a5752870a7d8",
+                    "bioAsHtml": "<p>Helen has 20 years’ experience working in the technology industry with a focus on the Software Development Lifecycle for a wealth of cross industry clients in the UK and abroad. Helen is passionate about DevOps and is the creator of the Ranger4 DevOps LiftOff Workshop and the Ranger4 DevOps Maturity Assessment - winner of the IBM Beacon Award 2015 for Outstanding DevOps Solution. She also started Ranger4’s #DevOpsFriday5 initiative and is on the Board of Regents at the DevOps Institute (Ranger4 are also a Registered Education Provider for the DOI’s DevOps training courses). Helen is also a novelist and ecologist. She once saw a flamingo lay an egg.</p>\n",
                     "acceptedTalks": [
-                    {
-                        "talkType": "Conference",
-                        "track": "Methodology &amp; Culture",
-                        "links": [
-                            {
-                                "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/IBN-5679",
-                                "rel": "http://cfp.devoxx.co.uk/api/profile/talk",
-                                "title": "More details about this talk"
-                            },
-                            {
-                                "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/695b40d928dd0a905b7ab1b900b5a5752870a7d8",
-                                "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
-                                "title": "Helen Beal"
-                            }
-                        ],
-                        "id": "IBN-5679",
-                        "title": "The DevOps Superpattern"
-                    }
-                ],
+                        {
+                            "talkType": "Conference",
+                            "track": "Methodology &amp; Culture",
+                            "links": [
+                                {
+                                    "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/IBN-5679",
+                                    "rel": "http://cfp.devoxx.co.uk/api/profile/talk",
+                                    "title": "More details about this talk"
+                                },
+                                {
+                                    "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/695b40d928dd0a905b7ab1b900b5a5752870a7d8",
+                                    "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
+                                    "title": "Helen Beal"
+                                }
+                            ],
+                            "id": "IBN-5679",
+                            "title": "The DevOps Superpattern"
+                        }
+                    ],
                     "company": "Ranger4",
                     "bio": "Helen has 20 years’ experience working in the technology industry with a focus on the Software Development Lifecycle for a wealth of cross industry clients in the UK and abroad. Helen is passionate about DevOps and is the creator of the Ranger4 DevOps LiftOff Workshop and the Ranger4 DevOps Maturity Assessment - winner of the IBM Beacon Award 2015 for Outstanding DevOps Solution. She also started Ranger4’s #DevOpsFriday5 initiative and is on the Board of Regents at the DevOps Institute (Ranger4 are also a Registered Education Provider for the DOI’s DevOps training courses). Helen is also a novelist and ecologist. She once saw a flamingo lay an egg.",
                     "lastName": "Beal",
@@ -109,13 +110,14 @@ describe('getTalkDetails', () => {
             .set('Accept', 'application/json')
             .expect(200)
             .end((err,res) => {
-                expect(res.body).to.include({
+                expect(res.body).to.equal({
                     "id": "IBN-5679",
                     "title": "The DevOps Superpattern",
                     "talkType": "Conference",
                     "track": "Agile, DevOps",
                     "lang": "en",
                     "summary": "Talk summary",
+                    "summaryAsHtml": "<p>Talk summary as html</p>",
                     "speakers": [
                         {
                             "link": {
