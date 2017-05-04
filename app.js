@@ -10,7 +10,11 @@ let req = require('then-request');
 let basic = require('basic-authorization-header');
 
 let devoxxUuidEndpoint;
-let devoxxPrivateEndpointpoint;
+let devoxxPrivateEndpoint;
+let devoxxSpeakersEndpoint;
+let devoxxRoomsEndpoint;
+let devoxxScheduleEndpoint;
+let devoxxTalkEndpoint;
 let authHeader;
 
 /**
@@ -34,7 +38,15 @@ if ('development' === app.get('env')) {
     devoxxUuidEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/uuid';
 
     //Wiremock URL for Schedulued and Favored Talks
-    devoxxPrivateEndpointpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
+    devoxxPrivateEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
+
+    //using live endpoints
+    devoxxSpeakersEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/";
+    devoxxRoomsEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/rooms/";
+    devoxxScheduleEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/";
+    devoxxTalkEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/";
+
+
 } else {
 
     //Set up BasicAuth Header
@@ -45,7 +57,13 @@ if ('development' === app.get('env')) {
     devoxxUuidEndpoint = 'http://cfp.devoxx.co.uk/uuid';
 
     //Retrieving the favourites and scheduled talks for the retrieved UUID
-    devoxxPrivateEndpointpoint = 'http://cfp.devoxx.co.uk/api/proposals';
+    devoxxPrivateEndpoint = 'http://cfp.devoxx.co.uk/api/proposals';
+
+    //Public API URLS
+    devoxxSpeakersEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/";
+    devoxxRoomsEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/rooms/";
+    devoxxScheduleEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/";
+    devoxxTalkEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/";
 }
 
 app.use((req, res, next) => {
@@ -90,7 +108,7 @@ app.get('/uuid', (request, response) => {
  */
 app.get('/scheduled', (request, response) => {
     let uuid = request.query.uuid;
-    let url = devoxxPrivateEndpointpoint + '/' + uuid + '/scheduled';
+    let url = devoxxPrivateEndpoint + '/' + uuid + '/scheduled';
 
     req('GET', url, {headers: authHeader}).then((res) => {
         response.setHeader('Content-Type', 'application/json');
@@ -112,7 +130,7 @@ app.get('/scheduled', (request, response) => {
  */
 app.get('/favored', (request, response) => {
     let uuid = request.query.uuid;
-    let url = devoxxPrivateEndpointpoint + '/' + uuid + '/favored';
+    let url = devoxxPrivateEndpoint + '/' + uuid + '/favored';
 
     req('GET', url, {headers: authHeader}).then((res) => {
         response.setHeader('Content-Type', 'application/json');
@@ -123,6 +141,118 @@ app.get('/favored', (request, response) => {
         response.setHeader('Content-Type', 'application/json');
         response.status = 404;
         response.write("Favored Talks not returned for email address given");
+        response.end();
+    })
+});
+
+
+//Public API Calls
+
+/**
+ * GET - schedule for the Devoxx Conf
+ * Returnns the days the conference is scheduled over
+ * */
+app.get('/schedule', (request, response) => {
+
+    let url = devoxxScheduleEndpoint;
+    console.log(devoxxScheduleEndpoint);
+
+    req('GET', url).then((res) => {
+        console.log(res.body.toString());
+        response.setHeader('Content-Type', 'application/json');
+        response.status = res.statusCode;
+        response.write(res.body);
+        response.end();
+    }, (err) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = 404;
+        response.write("Schedule Not available");
+        response.end();
+    })
+});
+
+/**
+ * GET - Rooms available at Devoxx Conf
+ * Returns an Array of rooms
+ * */
+app.get('/rooms', (request, response) => {
+
+    let url = devoxxRoomsEndpoint;
+
+    req('GET', url).then((res) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = res.statusCode;
+        response.write(res.body);
+        response.end();
+    }, (err) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = 404;
+        response.write("Schedule Not available");
+        response.end();
+    })
+});
+
+/**
+ * GET - Speakers for the Devoxx Conf
+ * Returnns the speakers scheduled at the conference
+ * */
+app.get('/speakers', (request, response) => {
+
+    let url = devoxxSpeakersEndpoint;
+
+    req('GET', url).then((res) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = res.statusCode;
+        response.write(res.body);
+        response.end();
+    }, (err) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = 404;
+        response.write("Schedule Not available");
+        response.end();
+    })
+});
+
+/**
+ * GET - speaker
+ * Returns the speaker
+ * @Params speakerId
+ */
+app.get('/speaker', (request, response) => {
+    let speakerId = request.query.speakerId;
+    let url = devoxxSpeakersEndpoint;
+
+    req('GET', url + speakerId).then((res) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = res.statusCode;
+        response.write(res.body);
+        response.end();
+    }, (err) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = 404;
+        response.write("No speaker was returned for the supplied speaker id");
+        response.end();
+    })
+});
+
+/**
+ * GET - Talks
+ * Returns information about the Talk
+ * @Params talkId
+ */
+app.get('/talks', (request, response) => {
+    let talkId = request.query.talkId;
+    let url = devoxxTalkEndpoint;
+
+    req('GET', url + talkId).then((res) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = res.statusCode;
+        response.write(res.body);
+        response.end();
+    }, (err) => {
+        response.setHeader('Content-Type', 'application/json');
+        response.status = 404;
+        response.write("No talk was returned for the supplied id");
         response.end();
     })
 });
