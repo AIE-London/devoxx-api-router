@@ -1,0 +1,55 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/conferences/DV17/rooms/"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "scheduled": {
+        "content": "All rooms",
+        "rooms": [{
+          "id": "a_gallery_hall",
+          "name": "Gallery Hall",
+          "capacity": 1500,
+          "setup": "special"
+        },
+          {
+            "id": "room1",
+            "name": "Room A",
+            "capacity": 220,
+            "setup": "theatre"
+          },
+          {
+            "id": "room2",
+            "name": "Room B",
+            "capacity": 32,
+            "setup": "classroom"
+          },
+          {
+            "id": "room3",
+            "name": "Room C",
+            "capacity": 32,
+            "setup": "classroom"
+          },
+          {
+            "id": "aud_room",
+            "name": "Auditorium",
+            "capacity": 550,
+            "setup": "theatre"
+          },
+          {
+            "id": "z_hall",
+            "name": "Exhibition floor",
+            "capacity": 1500,
+            "setup": "special"
+          }
+        ]
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*"
+    }
+  }
+}

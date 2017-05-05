@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "IBN-5679"
+    "url": "/api/conferences/DV17/talk?talkId=IBN-5679"
   },
   "response": {
     "status": 200,

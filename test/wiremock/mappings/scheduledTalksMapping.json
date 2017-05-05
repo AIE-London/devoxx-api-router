@@ -1,7 +1,7 @@
 {
   "request":{
     "method":"GET",
-    "url":"/scheduled",
+    "url":"/scheduled?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86",
     "basicAuthCredentials":{
       "username":"test@test.com",
       "password":"test"

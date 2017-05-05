@@ -51,7 +51,7 @@ if ('development' === app.get('env')) {
     //Wiremock URL for Scheduled and Favored Talks
     devoxxPrivateEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 
-    //using live endpoints
+    //wiremock endpoints
     devoxxSpeakersEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/speakers/";
     devoxxRoomsEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/rooms/";
     devoxxScheduleEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/schedules/";
@@ -189,7 +189,7 @@ app.get('/schedule', (request, response) => {
  * GET - Rooms available at Devoxx Conf
  * Returns an Array of rooms
  * */
-app.get('/rooms', (request, response) => {
+app.get('/api/conferences/DV17/rooms/', (request, response) => {
 
     let url = devoxxRoomsEndpoint;
 
@@ -232,7 +232,7 @@ app.get('/speakers', (request, response) => {
  * Returns the speaker
  * @Params speakerId
  */
-app.get('/speaker', (request, response) => {
+app.get('/api/conferences/DV17/speaker', (request, response) => {
     let speakerId = request.query.speakerId;
     let url = devoxxSpeakersEndpoint;
 
@@ -254,7 +254,7 @@ app.get('/speaker', (request, response) => {
  * Returns information about the Talk
  * @Params talkId
  */
-app.get('/talks', (request, response) => {
+app.get('/api/conferences/DV17/talk', (request, response) => {
     let talkId = request.query.talkId;
     let url = devoxxTalkEndpoint;
 
