@@ -118,7 +118,7 @@ app.get('/uuid', (request, response) => {
  */
 app.get('/scheduled', (request, response) => {
     let uuid = request.query.uuid;
-    let url = devoxxPrivateEndpoint + '/' + uuid + '/scheduled';
+    let url = devoxxPrivateEndpoint + uuid + '/scheduled';
     winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
