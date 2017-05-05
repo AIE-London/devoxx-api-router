@@ -62,7 +62,7 @@ describe('getFavoredTalks', function () {
 
 describe('getSpeakerDetails', function () {
     it('should return the speaker data for a talk', function (done) {
-        request(api).get('/api/conferences/DV17/speaker?speakerId=695b40d928dd0a905b7ab1b900b5a5752870a7d8')
+        request(api).get('/api/conferences/DV17/speaker/:695b40d928dd0a905b7ab1b900b5a5752870a7d8')
             .set('Accept', 'application/json')
             .expect(200)
             .end(function(err, res) {
@@ -106,7 +106,7 @@ describe('getSpeakerDetails', function () {
 
 describe('getTalkDetails', function () {
     it('should return the talk data', function (done) {
-        request(api).get('/api/conferences/DV17/talk?talkId=IBN-5679')
+        request(api).get('/api/conferences/DV17/talk/:IBN-5679')
             .set('Accept', 'application/json')
             .expect(200)
             .end(function(err, res) {
