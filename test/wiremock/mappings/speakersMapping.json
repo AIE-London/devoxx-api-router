@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/conferences/DV17/speakers/"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [{
+      "uuid": "695b40d928dd0a905b7ab1b900b5a5752870a7d8",
+      "company": "Ranger4",
+      "lastName": "Beal",
+      "links": [{
+        "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/695b40d928dd0a905b7ab1b900b5a5752870a7d8",
+        "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
+        "title": "Helen Beal"
+      }],
+      "firstName": "Helen",
+      "avatarURL": "https://media.licdn.com/media/p/2/000/10f/320/3b9da1f.jpg",
+      "twitter": "@helenranger4"
+    }, {
+      "uuid": "36b84431383f74bcfe3f456d179363e282fe79eb",
+      "company": "Voxxed",
+      "lastName": "Beaumont",
+      "links": [{
+        "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/36b84431383f74bcfe3f456d179363e282fe79eb",
+        "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
+        "title": "Katharine Beaumont"
+      }],
+      "firstName": "Katharine",
+      "avatarURL": "https://lh3.googleusercontent.com/-LKKRuOK-LEs/WFJql5AwQII/AAAAAAAAABA/JpGn12PingIQF-w6gJKaiKMYD3COD5ihgCEw/w140-h140-p/Screen%2BShot%2B2016-11-11%2Bat%2B17.04.51.png",
+      "twitter": "@katharineCodes"
+    }, {
+      "uuid": "7ad3a3fbce212fb6311fb97ddfd88b930339fbeb",
+      "company": null,
+      "lastName": "Bhasin",
+      "links": [{
+        "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/7ad3a3fbce212fb6311fb97ddfd88b930339fbeb",
+        "rel": "http://cfp.devoxx.co.uk/api/profile/speaker",
+        "title": "Krishan Bhasin"
+      }],
+      "firstName": "Krishan",
+      "avatarURL": "https://pbs.twimg.com/profile_images/820022399437508608/ouCxWPyB.jpg",
+      "twitter": "@KrishBhasin"
+    }
+
+    ],
+
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  }
+}

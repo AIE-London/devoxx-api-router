@@ -52,10 +52,10 @@ if ('development' === app.get('env')) {
     devoxxPrivateEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 
     //wiremock endpoints
-    devoxxSpeakersEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/speakers/";
-    devoxxRoomsEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/rooms/";
-    devoxxScheduleEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/schedules/";
-    devoxxTalkEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/talks/";
+    devoxxSpeakersEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/speakers";
+    devoxxRoomsEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/rooms";
+    devoxxScheduleEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/schedules";
+    devoxxTalkEndpoint = "https://aston-wiremock.eu-gb.mybluemix.net/api/conferences/DV17/talk";
 } else {
     winston.log('info', 'Launching in production mode');
     //Set up BasicAuth Header
@@ -73,7 +73,7 @@ if ('development' === app.get('env')) {
     devoxxSpeakersEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/speakers/";
     devoxxRoomsEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/rooms/";
     devoxxScheduleEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/";
-    devoxxTalkEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/talks/";
+    devoxxTalkEndpoint = "http://cfp.devoxx.co.uk/api/conferences/DV17/talk/";
 }
 
 app.use((req, res, next) => {
@@ -166,13 +166,11 @@ app.get('/favored', (request, response) => {
  * GET - schedule for the Devoxx Conf
  * Returnns the days the conference is scheduled over
  * */
-app.get('/schedule', (request, response) => {
+app.get('/api/conferences/DV17/schedules/', (request, response) => {
 
     let url = devoxxScheduleEndpoint;
-    console.log(devoxxScheduleEndpoint);
 
     req('GET', url).then((res) => {
-        console.log(res.body.toString());
         response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
@@ -189,9 +187,10 @@ app.get('/schedule', (request, response) => {
  * GET - Rooms available at Devoxx Conf
  * Returns an Array of rooms
  * */
-app.get('/api/conferences/DV17/rooms/', (request, response) => {
+app.get('/api/conferences/DV17/rooms', (request, response) => {
 
-    let url = devoxxRoomsEndpoint;
+    let url = devoxxRoomsEndpoint
+    console.log(url);
 
     req('GET', url).then((res) => {
         response.setHeader('Content-Type', 'application/json');
@@ -210,7 +209,7 @@ app.get('/api/conferences/DV17/rooms/', (request, response) => {
  * GET - Speakers for the Devoxx Conf
  * Returnns the speakers scheduled at the conference
  * */
-app.get('/speakers', (request, response) => {
+app.get('/api/conferences/DV17/speakers', (request, response) => {
 
     let url = devoxxSpeakersEndpoint;
 
@@ -232,11 +231,11 @@ app.get('/speakers', (request, response) => {
  * Returns the speaker
  * @Params speakerId
  */
-app.get('/api/conferences/DV17/speaker', (request, response) => {
-    let speakerId = request.query.speakerId;
-    let url = devoxxSpeakersEndpoint;
+app.get('/api/conferences/DV17/speakers/:speakerId', (request, response) => {
+    let speakerId = request.params.speakerId;
+    let url = devoxxSpeakersEndpoint + '/' + speakerId;
 
-    req('GET', url + speakerId).then((res) => {
+    req('GET', url ).then((res) => {
         response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);
@@ -257,8 +256,9 @@ app.get('/api/conferences/DV17/speaker', (request, response) => {
 app.get('/api/conferences/DV17/talk', (request, response) => {
     let talkId = request.query.talkId;
     let url = devoxxTalkEndpoint;
+    //console.log(url);
 
-    req('GET', url + talkId).then((res) => {
+    req('GET', url + '?talkId=' + talkId).then((res) => {
         response.setHeader('Content-Type', 'application/json');
         response.status = res.statusCode;
         response.write(res.body);

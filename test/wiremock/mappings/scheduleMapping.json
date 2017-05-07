@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/conferences/DV17/schedules"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "links": [{
+        "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/thursday",
+        "rel": "http://cfp.devoxx.co.uk/api/profile/schedule",
+        "title": "Thursday, 11th May 2017"
+      }, {
+        "href": "http://cfp.devoxx.co.uk/api/conferences/DV17/schedules/friday",
+        "rel": "http://cfp.devoxx.co.uk/api/profile/schedule",
+        "title": "Friday, 12th May 2017"
+      }]
+    },
+    "headers": {
+      "Content-Type": "application/json; charset=utf-8"
+    }
+  }
+}

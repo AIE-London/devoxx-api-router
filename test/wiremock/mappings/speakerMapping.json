@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "695b40d928dd0a905b7ab1b900b5a5752870a7d8"
+    "url": "/api/conferences/DV17/speakers?speakerId=695b40d928dd0a905b7ab1b900b5a5752870a7d8"
   },
   "response": {
     "status": 200,
