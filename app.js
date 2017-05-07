@@ -1,5 +1,6 @@
 'use strict';
 let express = require('express'), http = require('http'), path = require('path'), fs = require('fs');
+const winston = require('winston');
 
 let app = express();
 
@@ -9,11 +10,13 @@ let bodyParser = require('body-parser');
 let req = require('then-request');
 let basic = require('basic-authorization-header');
 
+const ytEndpoint = "https://www.googleapis.com/youtube/v3/search";
+const channelId = "UCxIamwHotqAAdmecaKT9WpA";
+
 let devoxxUuidEndpoint;
 let devoxxPrivateEndpointpoint;
 let authHeader;
 
-const winston = require('winston');
 winston.level = 'debug';
 
 winston.log('info', 'Launching app');
@@ -121,7 +124,6 @@ app.get('/scheduled', (request, response) => {
     })
 });
 
-
 /**
  * GET - favored talks for user
  * Returns the favored talks for the recieved uuid
@@ -144,6 +146,42 @@ app.get('/favored', (request, response) => {
         response.write("Favored Talks not returned for email address given");
         response.end();
     })
+});
+
+/**
+ * Youtube API integration
+ */
+let youtubeCache = {};
+app.get('/videos/topic/:topic', (request, res) => {
+  winston.log('debug', '[HTTP] Request inbound for video with topic: ' + request.params.topic);
+
+  if (!youtubeCache[request.params.topic]) {
+    let url =  ytEndpoint + "?part=snippet" +
+      "&channelId=" + channelId + "&q=" + request.params.topic.split(' ').join('|') +
+      "&key=" + process.env.GOOGLE_API_KEY;
+    winston.log('debug', '[HTTP] Request Outbound for topic: ' + request.params.topic);
+    req('GET', url, {}).then(response => {
+      winston.log('debug', '[HTTP] Response from Google for topic: ' + request.params.topic);
+      youtubeCache[request.params.topic] = response.body;
+      res.setHeader('Content-Type', 'application/json');
+      res.statusCode = 200;
+      res.write(response.body);
+      res.end();
+    }, error => {
+      winston.log('debug', '[HTTP] Response from youtube with error: ' + error.toString());
+      response.setHeader('Content-Type', 'application/json');
+      response.status = 503;
+      response.write(JSON.stringify({ error: "Service Unavailabile"}));
+      response.end();
+    });
+  } else {
+    winston.log('debug', '[HTTP] Using cache for topic: ' + request.params.topic);
+    res.setHeader('Content-Type', 'application/json');
+    res.statusCode = 200;
+    res.write(youtubeCache[request.params.topic]);
+    res.end();
+  }
+
 });
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function () {
