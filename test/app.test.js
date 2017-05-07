@@ -11,7 +11,7 @@ let api = require('../app');
 
 describe('getUuid', function () {
 
-    it('should return the UUID for user DanC', function () {
+    it('should return the UUID for user DanC', function (done) {
         request(api).get('/uuid?email=dan.cotton@capgemini.com')
             .set('Accept', 'text/plain')
             .expect(200)
@@ -24,7 +24,7 @@ describe('getUuid', function () {
 
 describe('getScheduledTalks', function () {
 
-    it('should return the scheduled talks for user DanC', function () {
+    it('should return the scheduled talks for user DanC', function (done) {
         request(api).get('/scheduled?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86')
             .set('Accept', 'application/json')
             .expect(200)
@@ -43,7 +43,7 @@ describe('getScheduledTalks', function () {
 
 describe('getFavoredTalks', function () {
 
-    it('should return the favored talks for user DanC', function () {
+    it('should return the favored talks for user DanC', function (done) {
         request(api).get('/favored?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86')
             .set('Accept', 'application/json')
             .expect(200)
@@ -61,11 +61,12 @@ describe('getFavoredTalks', function () {
 });
 
 describe('getSpeakerDetails', function () {
-    it('should return the speaker data for a talk', function () {
-        request(api).get('/speakers?speakerId=695b40d928dd0a905b7ab1b900b5a5752870a7d8')
+    it('should return the speaker data for a talk', function (done) {
+        request(api).get('/api/conferences/DV17/speaker/:695b40d928dd0a905b7ab1b900b5a5752870a7d8')
             .set('Accept', 'application/json')
             .expect(200)
-            .end((err, res) => {
+            .end(function(err, res) {
+                console.log(res.body);
                 expect(res.body).to.equal({
                     "uuid": "695b40d928dd0a905b7ab1b900b5a5752870a7d8",
                     "bioAsHtml": "<p>Helen has 20 years’ experience working in the technology industry with a focus on the Software Development Lifecycle for a wealth of cross industry clients in the UK and abroad. Helen is passionate about DevOps and is the creator of the Ranger4 DevOps LiftOff Workshop and the Ranger4 DevOps Maturity Assessment - winner of the IBM Beacon Award 2015 for Outstanding DevOps Solution. She also started Ranger4’s #DevOpsFriday5 initiative and is on the Board of Regents at the DevOps Institute (Ranger4 are also a Registered Education Provider for the DOI’s DevOps training courses). Helen is also a novelist and ecologist. She once saw a flamingo lay an egg.</p>\n",
@@ -104,11 +105,12 @@ describe('getSpeakerDetails', function () {
 });
 
 describe('getTalkDetails', function () {
-    it('should return the talk data', function () {
-        request(api).get('/talks?talkId=IBN-5679')
+    it('should return the talk data', function (done) {
+        request(api).get('/api/conferences/DV17/talk/:IBN-5679')
             .set('Accept', 'application/json')
             .expect(200)
-            .end((err, res) => {
+            .end(function(err, res) {
+                console.log(res.body);
                 expect(res.body).to.equal({
                     "id": "IBN-5679",
                     "title": "The DevOps Superpattern",
