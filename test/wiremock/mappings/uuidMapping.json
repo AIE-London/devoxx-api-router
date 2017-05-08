@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/uuid?email=dan.cotton-direct@capgemini.com",
+    "url": "/uuid?email=scott.moreton@capgemini.com",
     "basicAuthCredentials": {
       "username": "test@test.com",
       "password": "test"
@@ -9,10 +9,9 @@
   },
   "response": {
     "status": 200,
-    "body": "26667c9fdcc603ee93b43fb3e780b07378695a86",
+    "body": "0123456789876543210",
     "headers": {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Access-Control-Allow-Origin": "*"
+      "Content-Type": "text/plain; charset=utf-8"
     }
   }
 }

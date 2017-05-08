@@ -37,13 +37,12 @@ if ('development' === app.get('env')) {
     app.use(errorHandler());
 
     // Update allowed origins
-    allowedOrigins.concat(['https://localhost:3000', 'http://localhost:3000', ]);
+    allowedOrigins.concat(['https://localhost:3000', 'http://localhost:3000',]);
 
     //Set up Wiremock Basic Auth
     authHeader = {
         'Authorization': basic('test@test.com', 'test')
     };
-
     //Wiremock URL for UUID
     devoxxUuidEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/uuid';
 
@@ -83,8 +82,9 @@ app.use((req, res, next) => {
  */
 app.get('/uuid', (request, response) => {
     let userEmail = request.query.email;
-    let url = devoxxUuidEndpoint +'?email=' + userEmail;
+    let url = devoxxUuidEndpoint + '?email=' + userEmail;
     winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
+
     req('GET', url, {headers: authHeader}).then((res) => {
         winston.log('debug', '[HTTP] Response from devoxx with status: ' + res.statusCode);
         response.setHeader('Content-Type', 'text/plain');
@@ -153,34 +153,34 @@ app.get('/favored', (request, response) => {
  */
 let youtubeCache = {};
 app.get('/videos/topic/:topic', (request, res) => {
-  winston.log('debug', '[HTTP] Request inbound for video with topic: ' + request.params.topic);
+    winston.log('debug', '[HTTP] Request inbound for video with topic: ' + request.params.topic);
 
-  if (!youtubeCache[request.params.topic]) {
-    let url =  ytEndpoint + "?part=snippet" +
-      "&channelId=" + channelId + "&q=" + request.params.topic.split(' ').join('|') +
-      "&key=" + process.env.GOOGLE_API_KEY;
-    winston.log('debug', '[HTTP] Request Outbound for topic: ' + request.params.topic);
-    req('GET', url, {}).then(response => {
-      winston.log('debug', '[HTTP] Response from Google for topic: ' + request.params.topic);
-      youtubeCache[request.params.topic] = response.body;
-      res.setHeader('Content-Type', 'application/json');
-      res.statusCode = 200;
-      res.write(response.body);
-      res.end();
-    }, error => {
-      winston.log('debug', '[HTTP] Response from youtube with error: ' + error.toString());
-      response.setHeader('Content-Type', 'application/json');
-      response.status = 503;
-      response.write(JSON.stringify({ error: "Service Unavailabile"}));
-      response.end();
-    });
-  } else {
-    winston.log('debug', '[HTTP] Using cache for topic: ' + request.params.topic);
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = 200;
-    res.write(youtubeCache[request.params.topic]);
-    res.end();
-  }
+    if (!youtubeCache[request.params.topic]) {
+        let url = ytEndpoint + "?part=snippet" +
+            "&channelId=" + channelId + "&q=" + request.params.topic.split(' ').join('|') +
+            "&key=" + process.env.GOOGLE_API_KEY;
+        winston.log('debug', '[HTTP] Request Outbound for topic: ' + request.params.topic);
+        req('GET', url, {}).then(response => {
+            winston.log('debug', '[HTTP] Response from Google for topic: ' + request.params.topic);
+            youtubeCache[request.params.topic] = response.body;
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 200;
+            res.write(response.body);
+            res.end();
+        }, error => {
+            winston.log('debug', '[HTTP] Response from youtube with error: ' + error.toString());
+            response.setHeader('Content-Type', 'application/json');
+            response.status = 503;
+            response.write(JSON.stringify({error: "Service Unavailabile"}));
+            response.end();
+        });
+    } else {
+        winston.log('debug', '[HTTP] Using cache for topic: ' + request.params.topic);
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 200;
+        res.write(youtubeCache[request.params.topic]);
+        res.end();
+    }
 
 });
 
