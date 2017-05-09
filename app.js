@@ -71,14 +71,19 @@ app.use((req, res, next) => {
 
     if (allowedOrigins.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
+        return next();
+    }else {
+        res.statusCode = 401;
+        res.json({error: 'unauthorised'});
+        res.end();
     }
-    return next();
-});
 
+});
 
 /**
  * GET - uuid for user
  * Receives user email from devoxx dashboard ->
+
  * Returns UUID to devoxx dashboard to get user specific data
  */
 app.get('/uuid', (request, response) => {
