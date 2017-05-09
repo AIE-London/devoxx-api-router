@@ -66,13 +66,14 @@ if ('development' === app.get('env')) {
 app.use((req, res, next) => {
     // Localhost is only fine in dev mode.
     let origin = req.headers.origin;
+    winston.log('debug', '[HTTP] From origin' + origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
     if (allowedOrigins.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
         return next();
-    }else {
+    } else {
         res.statusCode = 401;
         res.json({error: 'unauthorised'});
         res.end();
