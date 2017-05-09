@@ -16,7 +16,7 @@ describe('getUuid', function () {
                 .get('/uuid?email=scott.moreton@capgemini.com')
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
-                .expect(200, '0123456789876543210', done)
+                .expect(200, '0123456789876543210', done);
     });
 });
 
@@ -27,7 +27,7 @@ describe('unauthorisedAllowOrigins', function () {
                 .get('/uuid?email=scott.moreton@capgemini.com')
                 .set('Origin', 'http://localhost:8080')
                 .set('Accept', 'application/json')
-                .expect(401, done)
+                .expect(401, done);
     });
 });
 
@@ -39,8 +39,7 @@ describe('getScheduledTalks', function () {
                 .get('/scheduled?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86')
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
-                .expect(200, {"scheduled": [{"id": "MXR-2678"}]}, done)
-            done();
+                .expect(200, {"scheduled": [{"id": "MXR-2678"}]}, done);
     });
 });
 
@@ -53,7 +52,6 @@ describe('getFavoredTalks', function () {
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
                 .expect(200, {"favored": [{"id": "MXR-2678"}]}, done);
-            done();
     });
 
 });
