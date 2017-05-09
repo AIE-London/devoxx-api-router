@@ -29,7 +29,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-let allowedOrigins = ['https://mydevoxx-dashboard.eu-gb.mybluemix.net'];
+let allowedOrigins = ['https://personal.devoxx.co.uk'];
 
 //Sets Env Variables based on environment
 if ('development' === app.get('env')) {
@@ -37,7 +37,7 @@ if ('development' === app.get('env')) {
     app.use(errorHandler());
 
     // Update allowed origins
-    allowedOrigins.concat(['https://localhost:3000', 'http://localhost:3000', ]);
+    allowedOrigins.concat(['https://localhost:3000', 'http://localhost:3000']);
 
     //Set up Wiremock Basic Auth
     authHeader = {
