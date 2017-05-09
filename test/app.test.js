@@ -16,7 +16,8 @@ describe('getUuid', function () {
                 .get('/uuid?email=scott.moreton@capgemini.com')
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
-                .expect(200, '0123456789876543210', done);
+                .expect(200, '0123456789876543210')
+                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
     });
 });
 
@@ -39,7 +40,8 @@ describe('getScheduledTalks', function () {
                 .get('/scheduled?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86')
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
-                .expect(200, {"scheduled": [{"id": "MXR-2678"}]}, done);
+                .expect(200, {"scheduled": [{"id": "MXR-2678"}]})
+                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
     });
 });
 
@@ -51,7 +53,8 @@ describe('getFavoredTalks', function () {
                 .get('/favored?uuid=26667c9fdcc603ee93b43fb3e780b07378695a86')
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
-                .expect(200, {"favored": [{"id": "MXR-2678"}]}, done);
+                .expect(200, {"favored": [{"id": "MXR-2678"}]})
+                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
     });
 
 });
