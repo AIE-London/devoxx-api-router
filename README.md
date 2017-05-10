@@ -5,9 +5,15 @@ This API routes private api calls to devoxx and authenicates them.
 Link to the live website: http://bit.ly/personal-devoxx
 
 ## Usage
-To run the API, clone this repo, then run (on the repo):
+
+You will need to setup a local wiremock server. We've provided some sample 'mappings'
+in /test/wiremock/mappings.
+
+Once this is done. Export the WIREMOCK_SERVER environment variable.
 ```bash
 npm install
+export WIREMOCK_SERVER=http://localhost:1234
+# use your wiremock URL
 npm start
 ```
 
