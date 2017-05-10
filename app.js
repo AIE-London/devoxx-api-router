@@ -13,8 +13,7 @@ let basic = require('basic-authorization-header');
 const ytEndpoint = "https://www.googleapis.com/youtube/v3/search";
 const channelId = "UCxIamwHotqAAdmecaKT9WpA";
 
-let devoxxUuidEndpoint;
-let devoxxPrivateEndpointpoint;
+let endpoint;
 let authHeader;
 
 winston.level = 'debug';
@@ -44,11 +43,9 @@ if ('development' === app.get('env')) {
     authHeader = {
         'Authorization': basic('test@test.com', 'test')
     };
-    //Wiremock URL for UUID
-    devoxxUuidEndpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/uuid';
+    //Wiremock URL
+    endpoint = process.env.WIREMOCK_SERVER;
 
-    //Wiremock URL for Schedulued and Favored Talks
-    devoxxPrivateEndpointpoint = 'https://aston-wiremock.eu-gb.mybluemix.net/';
 } else {
     winston.log('info', 'Launching in production mode');
     //Set up BasicAuth Header
@@ -57,10 +54,8 @@ if ('development' === app.get('env')) {
     };
     winston.log('debug', '[EMAIL] ' + process.env.username);
     //Devoxx API URLS to retrieve a users UUID
-    devoxxUuidEndpoint = 'http://cfp.devoxx.co.uk/uuid';
+    endpoint = 'https://cfp.devoxx.co.uk';
 
-    //Retrieving the favourites and scheduled talks for the retrieved UUID
-    devoxxPrivateEndpointpoint = 'http://cfp.devoxx.co.uk/api/proposals';
 }
 
 app.use((req, res, next) => {
@@ -89,7 +84,7 @@ app.use((req, res, next) => {
  */
 app.get('/uuid', (request, response) => {
     let userEmail = request.query.email;
-    let url = devoxxUuidEndpoint + '?email=' + userEmail;
+    let url = endpoint + '/uuid?email=' + userEmail;
     winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
@@ -113,7 +108,7 @@ app.get('/uuid', (request, response) => {
  */
 app.get('/scheduled', (request, response) => {
     let uuid = request.query.uuid;
-    let url = devoxxPrivateEndpointpoint + '/' + uuid + '/scheduled';
+    let url = endpoint + '/api/proposals/' + uuid + '/scheduled';
     winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
@@ -137,7 +132,7 @@ app.get('/scheduled', (request, response) => {
  */
 app.get('/favored', (request, response) => {
     let uuid = request.query.uuid;
-    let url = devoxxPrivateEndpointpoint + '/' + uuid + '/favored';
+    let url = endpoint + '/api/proposals/' + uuid + '/favored';
     winston.log('debug', '[HTTP] Calling Devoxx with URL: ' + url);
 
     req('GET', url, {headers: authHeader}).then((res) => {
