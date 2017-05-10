@@ -17,7 +17,7 @@ describe('getUuid', function () {
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
                 .expect(200, '0123456789876543210')
-                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
+                .expect('Access-Control-Allow-Origin', 'https://personal-devoxx.eu-gb.mybluemix.net', done);
     });
 });
 
@@ -41,7 +41,7 @@ describe('getScheduledTalks', function () {
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
                 .expect(200, {"scheduled": [{"id": "MXR-2678"}]})
-                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
+                .expect('Access-Control-Allow-Origin', 'https://personal-devoxx.eu-gb.mybluemix.net', done);
     });
 });
 
@@ -54,7 +54,7 @@ describe('getFavoredTalks', function () {
                 .set('Origin', 'https://personal.devoxx.co.uk')
                 .set('Accept', 'application/json')
                 .expect(200, {"favored": [{"id": "MXR-2678"}]})
-                .expect('Access-Control-Allow-Origin', 'https://personal.devoxx.co.uk', done);
+                .expect('Access-Control-Allow-Origin', 'https://personal-devoxx.eu-gb.mybluemix.net', done);
     });
 
 });
