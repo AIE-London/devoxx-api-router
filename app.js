@@ -29,7 +29,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-let allowedOrigins = ['https://personal.devoxx.co.uk'];
+let allowedOrigins = ['https://personal-devoxx.eu-gb.mybluemix.net'];
 
 //Sets Env Variables based on environment
 if ('development' === app.get('env')) {
