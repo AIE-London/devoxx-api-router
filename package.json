@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "dependencies": {
     "basic-authorization-header": "^0.2.7",
@@ -24,5 +25,7 @@
   "engines": {
     "node": "7.x"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  }
 }
