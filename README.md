@@ -27,7 +27,8 @@ Once this is done. Export the WIREMOCK_SERVER environment variable.
 The testing frameworks used for this API are Supertest, Mocha and Chai.
 To run these tests clone the repo and run the following command:
 ```bash
-mocha
+    npm install
+    npm test
 `````
 
 ## Capgemini
