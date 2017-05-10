@@ -1,6 +1,6 @@
 # Devoxx-API-Router
 
-This API routes private api calls to devoxx and authenicates them.
+This API routes private api calls to Devoxx and authenticates them.
 
 Link to the live website: http://bit.ly/personal-devoxx
 
